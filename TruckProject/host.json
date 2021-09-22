@@ -1,0 +1,28 @@
+{
+  "version": "2.0",
+  "logging": {
+    "applicationInsights": {
+      "samplingSettings": {
+        "isEnabled": true,
+        "excludedTypes": "Request"
+      }
+    }
+  },
+  "openApi": {
+    "info": {
+      "version": "1.0.0",
+      "title": "QR Code Generator",
+      "description": "A serverless Azure Function which helps you to create QR code for URLs.",
+      "termsOfService": "https://dotnetthoughts.net/",
+      "contact": {
+        "name": "anuraj",
+        "email": "anuraj at dotnetthoughts.net",
+        "url": "https://dotnetthoughts.net/"
+      },
+      "license": {
+        "name": "MIT",
+        "url": "https://anuraj.mit-license.org/"
+      }
+    }
+  }
+}
