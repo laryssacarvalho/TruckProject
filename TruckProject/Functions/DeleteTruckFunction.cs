@@ -18,7 +18,7 @@ namespace TruckProject
         }
 
         [FunctionName(nameof(DeleteTruckFunction))]
-        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "delete", Route = "truck/{truckId}")] HttpRequest request, string truckId, CancellationToken cancellationToken)
+        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "truck/{truckId}")] HttpRequest request, string truckId, CancellationToken cancellationToken)
         {
             return await ExecuteAsync(async () =>
             {

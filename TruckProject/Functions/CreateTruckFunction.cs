@@ -17,7 +17,7 @@ namespace TruckProject
         }
 
         [FunctionName(nameof(CreateTruckFunction))]
-        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = "truck")] TruckRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "truck")] TruckRequest request, CancellationToken cancellationToken)
         {
             return await ExecuteAsync(async () =>
             {

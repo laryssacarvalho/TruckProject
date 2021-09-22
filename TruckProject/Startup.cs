@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using TruckProject;
 using TruckProject.Domain.Entities;
 using TruckProject.Domain.Services;
-using TruckProject.Domain.Settings;
 using TruckProject.Infra;
 using TruckProject.Infra.Mongo.Interfaces;
 using TruckProject.Infra.Repositories;
@@ -21,19 +20,18 @@ namespace TruckProject
         public IConfiguration Configuration { get; }
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(builder.GetContext().ApplicationRootPath)
-                .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
-                .AddEnvironmentVariables()
-                .Build();
+            //var configuration = new ConfigurationBuilder()
+            //    .SetBasePath(builder.GetContext().ApplicationRootPath)
+            //    .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
+            //    .AddEnvironmentVariables()
+            //    .Build();
 
-            builder.Services.Configure<ApplicationSettings>(configuration.GetSection("applicationSettings"));
+            //builder.Services.Configure(configuration["MongoConnectionString"]);
 
             builder.Services.AddSingleton<IMongoConnection, MongoConnection>();
             builder.Services.AddSingleton<MongoContext>();
 
-            builder.Services.AddScoped<ITruckService, TruckService>();
-            //builder.Services.AddSingleton<TruckRepository>();
+            builder.Services.AddScoped<ITruckService, TruckService>();            
             builder.Services.AddSingleton<IRepository<Truck>, TruckRepository>();
             builder.Services.AddMediatR(GetType().Assembly);
 

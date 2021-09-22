@@ -1,0 +1,18 @@
+﻿{
+  ​
+  "profiles": {
+    ​
+    "TruckProject": {
+      ​
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "development",
+        "MongoConnectionString": "mongodb+srv://root:uhJFbUfTO8nJm2Jr@cluster0.id5rw.mongodb.net/TruckDB",
+        "MongoDatabaseName": "TruckDB"
+      }
+      ​
+    }
+    ​
+  }
+  ​
+}​
