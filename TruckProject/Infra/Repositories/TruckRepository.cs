@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using TruckProject.Domain.Entities;
 
 namespace TruckProject.Infra.Repositories
@@ -16,9 +17,9 @@ namespace TruckProject.Infra.Repositories
             Context = context;
         }
 
-        public Truck Add(Truck truck)
+        public async Task<Truck> AddAsync(Truck truck)
         {
-            Context.GetCollection<Truck>("trucks").InsertOne(truck);
+            await Context.GetCollection<Truck>("trucks").InsertOneAsync(truck);
             return truck;
         }
 

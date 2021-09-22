@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
+using System.Threading.Tasks;
 using TruckProject.Domain.Entities;
 using TruckProject.Infra.Repositories;
 
@@ -9,7 +9,8 @@ namespace TruckProject.Domain.Services
 {
     public class TruckService: ITruckService
     {
-        private IRepository<Truck> _repository;
+        private readonly IRepository<Truck> _repository;
+        
         public TruckService(IRepository<Truck> repository)
         {
             _repository = repository;
@@ -28,10 +29,16 @@ namespace TruckProject.Domain.Services
             return truck;
         }
 
-        public Truck Create(Truck truck)
+        public async Task<Truck> CreateAsync(Truck truck)
         {
-            _repository.Add(truck);
-            return truck;
+            Validate(truck);
+            return await _repository.AddAsync(truck);
+        }
+
+        private void Validate(Truck truck)
+        {
+            if (truck.Capacity < 0)
+                throw new Exception("Truck capacity can't be less than zero");
         }
 
         public Truck Get(Guid id)

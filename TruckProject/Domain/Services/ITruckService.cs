@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 using TruckProject.Domain.Entities;
 
 namespace TruckProject.Domain.Services
@@ -11,7 +11,7 @@ namespace TruckProject.Domain.Services
 
         public Truck Update(Truck truck);
 
-        public Truck Create(Truck truck);
+        public Task<Truck> CreateAsync(Truck truck);
 
         public Truck Get(Guid id);
 

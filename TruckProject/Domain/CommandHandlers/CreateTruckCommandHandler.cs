@@ -20,7 +20,7 @@ namespace TruckProject.Domain.CommandHandlers
             _truckService = truckService;
         }
 
-        public Task<Truck> Handle(CreateTruckCommand request, CancellationToken cancellationToken)
+        public async Task<Truck> Handle(CreateTruckCommand request, CancellationToken cancellationToken)
         {
             var truck = new Truck()
             {
@@ -28,9 +28,10 @@ namespace TruckProject.Domain.CommandHandlers
                 LicensePlate = request.LicensePlate,
                 Type = request.Type
             };
-            var result = _truckService.Create(truck);
 
-            return Task.FromResult(result);
+            var result = await _truckService.CreateAsync(truck);
+
+            return result;
         }
     }
 }
