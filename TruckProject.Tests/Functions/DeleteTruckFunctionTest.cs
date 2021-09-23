@@ -1,15 +1,13 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using MediatR;
-using Moq;
-using Xunit;
-using TruckProject;
-using TruckProject.Domain.Requests;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http.Internal;
+﻿using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
+using System.Threading;
+using System.Threading.Tasks;
+using Xunit;
 
-namespace TestProject1
+namespace TruckProject.Tests.Functions
 {
     public class DeleteTruckFunctionTest
     {

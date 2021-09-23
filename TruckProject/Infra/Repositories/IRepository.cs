@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
-using MongoDB.Driver;
 
 namespace TruckProject.Infra.Repositories
 {
     public interface IRepository<T>
     {
-        public Task<T> AddAsync(T entity);
+        public Task<T> AddAsync(T entity, CancellationToken cancellationToken);
 
-        public ReplaceOneResult Update(Expression<Func<T, bool>> filter, T entity);
+        public Task UpdateAsync(Expression<Func<T, bool>> filter, T entity, CancellationToken cancellationToken);
 
-        public DeleteResult Remove(Expression<Func<T, bool>> filter);
+        public Task RemoveAsync(Expression<Func<T, bool>> filter, CancellationToken cancellationToken);
 
         public List<T> GetAll();
 
-        public T GetById(Guid id);
+        public Task<T> GetByIdAsync(Guid id);
     }
 }

@@ -10,7 +10,7 @@ using TruckProject.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging.Abstractions;
 
-namespace TestProject1
+namespace TruckProject.Tests.Functions
 {
     public class UpdateTruckFunctionTest
     {

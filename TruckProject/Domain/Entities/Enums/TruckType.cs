@@ -11,7 +11,6 @@ namespace TruckProject.Domain.Entities.Enums
         Toco,
         Truck,
         Bitruck,
-        [Description("Cavalo Mecânico")]
         CavaloMecanico
     }
 }

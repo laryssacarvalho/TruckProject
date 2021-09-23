@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace TruckProject
@@ -23,7 +22,9 @@ namespace TruckProject
             }
             catch (Exception ex)
             {
-                throw ex;
+                var response = new { Message = ex.Message, Error = true };
+
+                return new JsonResult(response);
             }
 
         }

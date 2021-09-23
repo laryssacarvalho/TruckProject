@@ -19,11 +19,10 @@ namespace TruckProject.Domain.CommandHandlers
             _truckService = truckService;
         }
 
-        public Task<bool> Handle(DeleteTruckCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(DeleteTruckCommand request, CancellationToken cancellationToken)
         {
-            _truckService.Delete(request.Id);
-
-            return Task.FromResult(true);
+            await _truckService.DeleteAsync(request.Id, cancellationToken);
+            return true;
         }
     }
 }

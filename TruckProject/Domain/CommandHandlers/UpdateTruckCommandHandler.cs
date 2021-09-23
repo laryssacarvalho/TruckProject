@@ -21,18 +21,15 @@ namespace TruckProject.Domain.CommandHandlers
             _truckService = truckService;
         }
 
-        public Task<Truck> Handle(UpdateTruckCommand request, CancellationToken cancellationToken)
+        public async Task<Truck> Handle(UpdateTruckCommand request, CancellationToken cancellationToken)
         {
-            var truck = _truckService.Get(request.Id);
-            Enum.TryParse(request.Type, out TruckType type);
+            var truck = await _truckService.GetAsync(request.Id);
 
             truck.LicensePlate = request.LicensePlate;
-            truck.Type = type;
+            truck.Type = request.Type;
             truck.Capacity = request.Capacity;
 
-            _truckService.Update(truck);
-
-            return Task.FromResult(truck);
+            return await _truckService.UpdateAsync(truck, cancellationToken);
         }
     }
 }

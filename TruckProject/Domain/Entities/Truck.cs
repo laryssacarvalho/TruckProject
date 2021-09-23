@@ -13,7 +13,7 @@ namespace TruckProject.Domain.Entities
 
         public double Capacity { get; set; }
 
-        public TruckType Type { get; set; }
+        public string Type { get; set; }
 
         public string LicensePlate { get; set; }
 

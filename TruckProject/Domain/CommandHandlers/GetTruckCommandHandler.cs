@@ -1,7 +1,5 @@
 ﻿using MediatR;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using TruckProject.Domain.Commands;
@@ -19,13 +17,13 @@ namespace TruckProject.Domain.CommandHandlers
             _truckService = truckService;
         }
 
-        public Task<List<Truck>> Handle(GetTruckCommand request, CancellationToken cancellationToken)
+        public async Task<List<Truck>> Handle(GetTruckCommand request, CancellationToken cancellationToken)
         {
             List<Truck> trucks = new List<Truck>();
 
             if (request.Id != default)
             {
-                var truck = _truckService.Get(request.Id);
+                var truck = await _truckService.GetAsync(request.Id);
                 if(truck != null)
                 {
                     trucks.Add(truck);
@@ -35,7 +33,7 @@ namespace TruckProject.Domain.CommandHandlers
             {
                 trucks.AddRange(_truckService.GetAll());
             }
-            return Task.FromResult(trucks);
+            return trucks;
         }
     }
 }

@@ -19,17 +19,15 @@ namespace TruckProject.Domain.CommandHandlers
         }
 
         public async Task<Truck> Handle(CreateTruckCommand request, CancellationToken cancellationToken)
-        {
-            Enum.TryParse(request.Type, out TruckType type);
-
+        {            
             var truck = new Truck()
             {
                 Capacity = request.Capacity,
                 LicensePlate = request.LicensePlate,
-                Type = type
+                Type = request.Type
             };
 
-            var result = await _truckService.CreateAsync(truck);
+            var result = await _truckService.CreateAsync(truck, cancellationToken);
 
             return result;
         }

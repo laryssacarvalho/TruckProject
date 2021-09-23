@@ -1,18 +1,13 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using MediatR;
-using Moq;
-using Xunit;
-using TruckProject.Domain.Commands;
-using TruckProject;
-using TruckProject.Domain.Requests;
-using TruckProject.Domain.Entities;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging.Abstractions;
-using Microsoft.AspNetCore.Http.Internal;
+﻿using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
+using System.Threading;
+using System.Threading.Tasks;
+using Xunit;
 
-namespace TestProject1
+namespace TruckProject.Tests.Functions
 {
     public class GetTruckFunctionTest
     {
