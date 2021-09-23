@@ -5,16 +5,16 @@ using TruckProject.Domain.Entities;
 
 namespace TruckProject.Domain.Services
 {
-    public interface ITruckService
+    public interface IService<T>
     {
         public void Delete(Guid id);
 
-        public Truck Update(Truck truck);
+        public T Update(T entity);
 
-        public Task<Truck> CreateAsync(Truck truck);
+        public Task<T> CreateAsync(T entity);
 
-        public Truck Get(Guid id);
+        public T Get(Guid id);
 
-        public List<Truck> GetAll();
+        public List<T> GetAll();
     }
 }

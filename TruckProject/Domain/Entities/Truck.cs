@@ -3,6 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TruckProject.Domain.Entities.Enums;
 
 namespace TruckProject.Domain.Entities
 {
@@ -12,7 +13,7 @@ namespace TruckProject.Domain.Entities
 
         public double Capacity { get; set; }
 
-        public string Type { get; set; }
+        public TruckType Type { get; set; }
 
         public string LicensePlate { get; set; }
 

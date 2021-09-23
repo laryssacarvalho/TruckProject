@@ -23,8 +23,7 @@ namespace TruckProject
             }
             catch (Exception ex)
             {
-                throw;
-                //return new StatusCodeResult(500);
+                throw ex;
             }
 
         }

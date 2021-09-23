@@ -12,9 +12,9 @@ namespace TruckProject.Domain.CommandHandlers
 {
     public class DeleteTruckCommandHandler : IRequestHandler<DeleteTruckCommand, bool>
     {
-        private readonly ITruckService _truckService;
+        private readonly IService<Truck> _truckService;
 
-        public DeleteTruckCommandHandler(ITruckService truckService)
+        public DeleteTruckCommandHandler(IService<Truck> truckService)
         {
             _truckService = truckService;
         }

@@ -25,7 +25,7 @@ namespace TruckProject
                 if (truckId == null)
                     return new StatusCodeResult(400);
 
-                if (request == null || !request.IsValid())
+                if (request == null)
                     return new StatusCodeResult(400);
 
                 var truck = await _mediator.Send(GetTruckCommand.Create(Guid.Parse(truckId)), cancellationToken);

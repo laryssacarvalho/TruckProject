@@ -8,8 +8,6 @@ namespace TruckProject.Infra.Repositories
 {
     public interface IRepository<T>
     {
-        MongoContext Context { get; }
-
         public Task<T> AddAsync(T entity);
 
         public ReplaceOneResult Update(Expression<Func<T, bool>> filter, T entity);

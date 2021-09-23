@@ -20,21 +20,12 @@ namespace TruckProject
         public IConfiguration Configuration { get; }
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            //var configuration = new ConfigurationBuilder()
-            //    .SetBasePath(builder.GetContext().ApplicationRootPath)
-            //    .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
-            //    .AddEnvironmentVariables()
-            //    .Build();
-
-            //builder.Services.Configure(configuration["MongoConnectionString"]);
-
             builder.Services.AddSingleton<IMongoConnection, MongoConnection>();
-            builder.Services.AddSingleton<MongoContext>();
+            builder.Services.AddSingleton<IMongoContext, MongoContext>();
 
-            builder.Services.AddScoped<ITruckService, TruckService>();            
-            builder.Services.AddSingleton<IRepository<Truck>, TruckRepository>();
+            builder.Services.AddScoped<IService<Truck>, TruckService>();
+            builder.Services.AddScoped<IRepository<Truck>, TruckRepository>();
             builder.Services.AddMediatR(GetType().Assembly);
-
         }
     }
 }

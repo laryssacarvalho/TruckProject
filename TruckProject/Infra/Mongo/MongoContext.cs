@@ -1,18 +1,20 @@
-﻿using MongoDB.Bson.Serialization;
-using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using TruckProject.Infra.Mongo;
+﻿using MongoDB.Driver;
 using TruckProject.Infra.Mongo.Interfaces;
 
 namespace TruckProject.Infra
 {
-    public class MongoContext : ContextBase
+    public class MongoContext : IMongoContext
     {
-        public MongoContext(IMongoConnection mongoConnection) : base(mongoConnection)
-        {
+        public IMongoDatabase Database { get; }
 
+        public MongoContext(IMongoConnection mongoConnection)
+        {
+            Database = mongoConnection.GetDatabase();
+        }
+        
+        public IMongoCollection<T> GetCollection<T>(string name)
+        {
+            return Database.GetCollection<T>(name);
         }
     }
 }

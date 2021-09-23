@@ -21,7 +21,7 @@ namespace TruckProject
         {
             return await ExecuteAsync(async () =>
             {
-                if (request == null || !request.IsValid())
+                if (request == null)
                     return new StatusCodeResult(400);
 
                 var result = await _mediator.Send(CreateTruckCommand.Create(request), cancellationToken);

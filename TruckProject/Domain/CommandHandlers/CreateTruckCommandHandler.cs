@@ -1,7 +1,5 @@
 ﻿using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using TruckProject.Domain.Commands;
@@ -13,20 +11,22 @@ namespace TruckProject.Domain.CommandHandlers
 {
     public class CreateTruckCommandHandler : IRequestHandler<CreateTruckCommand, Truck>
     {
-        private readonly ITruckService _truckService;
+        private readonly IService<Truck> _truckService;
 
-        public CreateTruckCommandHandler(ITruckService truckService)
+        public CreateTruckCommandHandler(IService<Truck> truckService)
         {
             _truckService = truckService;
         }
 
         public async Task<Truck> Handle(CreateTruckCommand request, CancellationToken cancellationToken)
         {
+            Enum.TryParse(request.Type, out TruckType type);
+
             var truck = new Truck()
             {
                 Capacity = request.Capacity,
                 LicensePlate = request.LicensePlate,
-                Type = request.Type
+                Type = type
             };
 
             var result = await _truckService.CreateAsync(truck);

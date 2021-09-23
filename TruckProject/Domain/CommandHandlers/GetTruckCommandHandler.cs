@@ -12,9 +12,9 @@ namespace TruckProject.Domain.CommandHandlers
 {
     public class GetTruckCommandHandler : IRequestHandler<GetTruckCommand, List<Truck>>
     {
-        private readonly ITruckService _truckService;
+        private readonly IService<Truck> _truckService;
 
-        public GetTruckCommandHandler(ITruckService truckService)
+        public GetTruckCommandHandler(IService<Truck> truckService)
         {
             _truckService = truckService;
         }

@@ -7,7 +7,7 @@ using TruckProject.Infra.Repositories;
 
 namespace TruckProject.Domain.Services
 {
-    public class TruckService: ITruckService
+    public class TruckService: IService<Truck>
     {
         private readonly IRepository<Truck> _repository;
         
@@ -24,6 +24,7 @@ namespace TruckProject.Domain.Services
 
         public Truck Update(Truck truck)
         {
+            Validate(truck);
             Expression<Func<Truck, bool>> filter = x => x.Id.Equals(truck.Id);
             _repository.Update(filter, truck);
             return truck;
@@ -37,8 +38,20 @@ namespace TruckProject.Domain.Services
 
         private void Validate(Truck truck)
         {
-            if (truck.Capacity < 0)
-                throw new Exception("Truck capacity can't be less than zero");
+            if(truck.Capacity == null || truck.Capacity < 0)
+            {
+                throw new Exception("Truck capacity can't be null or less than zero");
+            }
+
+            if (truck.LicensePlate== null)
+            {
+                throw new Exception("Truck license plate can't be null");
+            }
+
+            if (truck.Type == null)
+            {
+                throw new Exception("Truck type can't be null");
+            }
         }
 
         public Truck Get(Guid id)
