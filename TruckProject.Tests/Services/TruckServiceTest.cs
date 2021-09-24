@@ -1,10 +1,9 @@
-﻿using System;
+﻿using Moq;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
 using TruckProject.Domain.Entities;
 using TruckProject.Domain.Services;
 using TruckProject.Infra.Repositories;
@@ -81,9 +80,9 @@ namespace TruckProject.Tests.Services
 
             var truckService = new TruckService(repositoryMock.Object);
 
-            var trucks = truckService.GetAll();
+            var trucks = await truckService.GetAllAsync();
 
-            repositoryMock.Verify(x => x.GetAll(), Times.Once);
+            repositoryMock.Verify(x => x.GetAllAsync(), Times.Once);
 
             Assert.NotNull(trucks);
             Assert.IsType<List<Truck>>(trucks);
@@ -96,9 +95,8 @@ namespace TruckProject.Tests.Services
             var repositoryMock = GetTruckRepositoryMock();
 
             var truckService = new TruckService(repositoryMock.Object);
-            var id = new Guid("4ebb6003-03a4-4e93-9870-9d1197e0791d");
 
-            await truckService.DeleteAsync(id, CancellationToken.None);
+            await truckService.DeleteAsync(TruckMotherObject.ValidTruck().Id, CancellationToken.None);
 
             repositoryMock.Verify(x => x.RemoveAsync(It.IsAny<Expression<Func<Truck, bool>>>(), It.IsAny<CancellationToken>()), Times.Once);
         }
@@ -109,11 +107,10 @@ namespace TruckProject.Tests.Services
             var repositoryMock = GetTruckRepositoryMock();
 
             var truckService = new TruckService(repositoryMock.Object);
-            var id = new Guid("4ebb6003-03a4-4e93-9870-9d1197e0791d");
 
             await truckService.UpdateAsync(TruckMotherObject.ValidTruck(), CancellationToken.None);
 
-            repositoryMock.Verify(x => x.UpdateAsync(It.IsAny<Expression<Func<Truck, bool>>>(), TruckMotherObject.ValidTruck(), It.IsAny<CancellationToken>()), Times.Once);
+            repositoryMock.Verify(x => x.UpdateAsync(It.IsAny<Expression<Func<Truck, bool>>>(), It.IsAny<Truck>(), It.IsAny<CancellationToken>()), Times.Once);            
         }
 
         private Mock<IRepository<Truck>> GetTruckRepositoryMock()
@@ -129,15 +126,15 @@ namespace TruckProject.Tests.Services
                 .ReturnsAsync(TruckMotherObject.ValidTruck());
 
             mock
-                .Setup(x => x.GetAll())
-                .Returns(TruckMotherObject.ValidListTruck());
+                .Setup(x => x.GetAllAsync())
+                .ReturnsAsync(TruckMotherObject.ValidListTruck());
 
             mock
                 .Setup(x => x.RemoveAsync(It.IsAny<Expression<Func<Truck, bool>>>(), It.IsAny<CancellationToken>()))
                 .Verifiable();
 
             mock
-                .Setup(x => x.UpdateAsync(It.IsAny<Expression<Func<Truck, bool>>>(), It.Is<Truck>(x => x.Id == TruckMotherObject.ValidTruck().Id), It.IsAny<CancellationToken>()))
+                .Setup(x => x.UpdateAsync(It.IsAny<Expression<Func<Truck, bool>>>(), It.IsAny<Truck>(), It.IsAny<CancellationToken>()))
                 .Verifiable();
 
             return mock;
