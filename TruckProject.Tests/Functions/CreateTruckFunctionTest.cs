@@ -1,10 +1,11 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using TruckProject.Domain.Commands;
-using TruckProject.Domain.Requests;
+using TruckProject.Domain.Entities;
 using TruckProject.Tests.MotherObjects;
 using Xunit;
 
@@ -15,52 +16,49 @@ namespace TruckProject.Tests.Functions
         [Fact]
         public async Task Create_truck_function_executed_as_success()
         {
-            var request = new TruckRequest() { LicensePlate = "123456", Capacity = 12, Type = "VUC"};
-            
             var mediatorMock = GetMediatorMock();
 
             var function = new CreateTruckFunction(mediatorMock.Object);
             
-            var response = await function.Run(request, CancellationToken.None);
+            var response = await function.Run(TruckRequestMotherObject.ValidTruckRequest(), CancellationToken.None);
+            var addedTruck = ((JsonResult)response).Value as Truck;
 
             mediatorMock.Verify(x => x.Send(It.IsAny<CreateTruckCommand>(), It.IsAny<CancellationToken>()), Times.Once);
 
             Assert.NotNull(response);
             Assert.IsType<JsonResult>(response);
-            //Assert.Equal(TruckMotherObject.ValidTruck().Capacity, response.Capacity);
-            //Assert.Equal(TruckMotherObject.ValidTruck().LicensePlate, response.LicensePlate);
-            //Assert.Equal(TruckMotherObject.ValidTruck().Type, response.Type);
+            Assert.Equal(TruckMotherObject.ValidTruck().Capacity, addedTruck.Capacity);
+            Assert.Equal(TruckMotherObject.ValidTruck().LicensePlate, addedTruck.LicensePlate);
+            Assert.Equal(TruckMotherObject.ValidTruck().Type, addedTruck.Type);
         }
 
         [Fact]
         public async Task Create_truck_function_executed_as_error_when_truck_type_is_invalid()
         {
-            var request = new TruckRequest() { LicensePlate = "123456", Capacity = 12, Type = "teste" };
-
-            var mediatorMock = new Mock<IMediator>();
+            var mediatorMock = GetMediatorMock();
 
             var function = new CreateTruckFunction(mediatorMock.Object);
 
-            var response = await function.Run(request, CancellationToken.None);
+            var response = await function.Run(TruckRequestMotherObject.InvalidTruckRequest(), CancellationToken.None);
 
-            Assert.IsType<StatusCodeResult>(response);
-            Assert.Equal(400, ((StatusCodeResult)response).StatusCode);
+            dynamic exception = ((JsonResult)response).Value;
+
+            mediatorMock.Verify(x => x.Send(It.IsAny<CreateTruckCommand>(), It.IsAny<CancellationToken>()), Times.Once);
+
+            Assert.NotNull(response);
+            Assert.IsType<JsonResult>(response);
+            Assert.Equal(true, exception?.GetType().GetProperty("Error")?.GetValue(exception, null));
         }
 
         private Mock<IMediator> GetMediatorMock()
         {
             var mock = new Mock<IMediator>();
-            
-            var result = new JsonResult(TruckMotherObject.ValidTruck());
 
-            //mock.Setup(x => x.Send(It.IsAny<CreateTruckCommand>(), CancellationToken.None))
-            //    .ReturnsAsync(result);
-            
-            //mock.Setup(x => x.Send(It.IsAny<CreateTruckCommand>(), CancellationToken.None))
-            //    .ReturnsAsync(TruckMotherObject.ValidTruck());
+            mock.Setup(x => x.Send(It.Is<CreateTruckCommand>(x => x.LicensePlate == TruckRequestMotherObject.ValidTruckRequest().LicensePlate), CancellationToken.None))
+                .ReturnsAsync(TruckMotherObject.ValidTruck());
 
-            //mediatorMock.Setup(x => x.Send(It.IsAny<FleetAvailabilityEmailReportCommand>(), CancellationToken.None))
-            //    .ReturnsAsync(resultFun)
+            mock.Setup(x => x.Send(It.Is<CreateTruckCommand>(x => x.LicensePlate != TruckRequestMotherObject.ValidTruckRequest().LicensePlate), CancellationToken.None))
+                .Throws(new ArgumentNullException());
 
             return mock;
         }

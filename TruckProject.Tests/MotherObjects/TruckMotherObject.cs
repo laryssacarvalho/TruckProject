@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using TruckProject.Domain.Entities;
-using TruckProject.Domain.Entities.Enums;
 
 namespace TruckProject.Tests.MotherObjects
 {
@@ -22,6 +21,7 @@ namespace TruckProject.Tests.MotherObjects
         {
             return new Truck
             {
+                Id = new Guid("4aade100-cb8a-4bf9-874d-c0117f848b4e"),
                 Capacity = 12,
                 LicensePlate = null,
                 Type = "Toco"
@@ -56,15 +56,15 @@ namespace TruckProject.Tests.MotherObjects
                 {
                     Id = new Guid("4ebb6003-03a4-4e93-9870-9d1197e0791d"),
                     Capacity = 100,
-                    LicensePlate = "AAA-1333",
+                    LicensePlate = "AAA-1111",
                     Type = "VUC"
                 },
                 new Truck
                 {
-                    Id = new Guid("4ebb6003-03a4-4e93-9870-9d1197e0791d"),
+                    Id = new Guid("7d1d9beb-88c9-4b29-b8b5-b9d6a1bc4271"),
                     Capacity = 100,
-                    LicensePlate = "AAA-1333",
-                    Type = "VUC"
+                    LicensePlate = "AAA-2222",
+                    Type = "Toco"
                 },
 
             };

@@ -25,6 +25,11 @@ namespace TruckProject
                 if (truckId == null)
                     return new StatusCodeResult(400);
 
+                var truck = await _mediator.Send(GetTruckCommand.Create(Guid.Parse(truckId)), cancellationToken);
+
+                if (truck.Count == 0)
+                    return new StatusCodeResult(404);
+
                 await _mediator.Send(DeleteTruckCommand.Create(Guid.Parse(truckId)), cancellationToken);
 
                 return new StatusCodeResult(200);

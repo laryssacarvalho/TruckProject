@@ -30,7 +30,7 @@ namespace TruckProject
 
                 var truck = await _mediator.Send(GetTruckCommand.Create(Guid.Parse(truckId)), cancellationToken);
                 
-                if(truck == null)
+                if(truck.Count == 0)
                     return new StatusCodeResult(404);
                 
                 await _mediator.Send(UpdateTruckCommand.Create(Guid.Parse(truckId), request), cancellationToken);
