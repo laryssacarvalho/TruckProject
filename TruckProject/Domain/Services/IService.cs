@@ -16,6 +16,6 @@ namespace TruckProject.Domain.Services
 
         public Task<T> GetAsync(Guid id);
 
-        public List<T> GetAll();
+        public Task<List<T>> GetAllAsync();
     }
 }

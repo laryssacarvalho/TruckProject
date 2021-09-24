@@ -14,7 +14,7 @@ namespace TruckProject.Infra.Repositories
 
         public Task RemoveAsync(Expression<Func<T, bool>> filter, CancellationToken cancellationToken);
 
-        public List<T> GetAll();
+        public Task<List<T>> GetAllAsync();
 
         public Task<T> GetByIdAsync(Guid id);
     }

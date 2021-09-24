@@ -41,10 +41,10 @@ namespace TruckProject.Infra.Repositories
             await _context.GetCollection<Truck>("trucks").DeleteOneAsync(filter);
         }
 
-        public List<Truck> GetAll()
+        public async Task<List<Truck>> GetAllAsync()
         {
-            return _context.GetCollection<Truck>("trucks").Aggregate().ToList();
-        }        
+            return await _context.GetCollection<Truck>("trucks").Find(_ => true).ToListAsync();
+        }
 
         public async Task<Truck> GetByIdAsync(Guid id)
         {

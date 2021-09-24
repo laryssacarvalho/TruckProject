@@ -40,7 +40,7 @@ namespace TruckProject.Tests.Handlers
 
             var response = await commandHandler.Handle(GetTruckCommand.Create(), CancellationToken.None);
 
-            serviceMock.Verify(x => x.GetAll(), Times.Once);
+            serviceMock.Verify(x => x.GetAllAsync(), Times.Once);
 
             Assert.NotNull(response);
             Assert.IsType<List<Truck>>(response);
@@ -56,8 +56,8 @@ namespace TruckProject.Tests.Handlers
                 .ReturnsAsync(TruckMotherObject.ValidTruck());
 
             mock
-                .Setup(x => x.GetAll())
-                .Returns(TruckMotherObject.ValidListTruck());
+                .Setup(x => x.GetAllAsync())
+                .ReturnsAsync(TruckMotherObject.ValidListTruck());
 
             return mock;
         }

@@ -31,7 +31,7 @@ namespace TruckProject.Domain.CommandHandlers
             }
             else
             {
-                trucks.AddRange(_truckService.GetAll());
+                trucks.AddRange(await _truckService.GetAllAsync());
             }
             return trucks;
         }

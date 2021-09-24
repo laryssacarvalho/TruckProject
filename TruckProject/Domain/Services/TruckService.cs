@@ -67,10 +67,9 @@ namespace TruckProject.Domain.Services
             return await _repository.GetByIdAsync(id);
         }
         
-
-        public List<Truck> GetAll()
+        public async Task<List<Truck>> GetAllAsync()
         {
-            return _repository.GetAll();
+            return await _repository.GetAllAsync();
         }
     }
 }
